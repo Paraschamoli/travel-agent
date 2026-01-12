@@ -1,0 +1,345 @@
+id: travel-planner-v1
+name: travel-planner
+version: 1.0.0
+author: paras25619@gmail.com
+
+# Description
+description: |
+  Comprehensive travel planning and itinerary creation skill that provides personalized
+  travel plans with accommodations, activities, logistics, and local insights. Integrates
+  Exa search for destination research and MCP tools for Airbnb accommodations and
+  Google Maps transportation planning.
+
+# Tags and Modes
+tags:
+  - travel
+  - planner
+  - itinerary
+  - tourism
+  - vacation
+  - trip
+  - exa
+  - mcp
+  - airbnb
+  - google-maps
+  - logistics
+  - budget
+
+input_modes:
+  - text/plain
+  - application/json
+
+output_modes:
+  - text/plain
+  - application/json
+  - text/markdown
+
+# Example Queries
+examples:
+  - "Plan a 5-day cultural exploration trip to Kyoto for a family of 4"
+  - "Create a romantic weekend getaway in Paris with a $2000 budget"
+  - "Organize a 7-day adventure trip to New Zealand for solo travel"
+  - "Design a tech company offsite in Barcelona for 20 people"
+  - "Plan a luxury honeymoon in Maldives for 10 days"
+  - "Plan a team-building retreat in Costa Rica for 25 people"
+  - "Design a food and wine exploration in Tuscany"
+  - "Create a hiking expedition in Patagonia"
+  - "Organize a wellness retreat in Bali for 15 employees"
+  - "Plan a traditional arts and crafts tour in Kyoto"
+
+# Requirements
+requirements:
+  packages:
+    - agno>=2.2.0
+    - openai>=2.11.0
+    - exa-py>=2.0.0
+    - python-dotenv>=1.0.1
+  system: []
+  min_memory_mb: 512
+  external_services:
+    - OpenAI API or OpenRouter API (for LLM capabilities)
+    - Exa API (required for destination research)
+    - Mem0 API (optional, for memory operations)
+    - PostgreSQL (optional, for vector database)
+
+# Performance Metrics
+performance:
+  avg_processing_time_ms: 8000
+  max_concurrent_requests: 3
+  memory_per_request_mb: 512
+  scalability: horizontal
+
+# Tool Restrictions
+allowed_tools:
+  - ExaTools
+  - MultiMCPTools
+  - Mem0Tools
+  - Think
+  - Analyze
+  - Reason
+  - Extract
+  - ReasoningTools
+
+# Rich Documentation
+documentation:
+  overview: |
+    This skill specializes in comprehensive travel planning and itinerary creation
+    using real-time destination data from Exa search and integrated MCP tools for
+    accommodations and transportation. It excels at creating detailed, personalized
+    travel plans that consider budgets, preferences, group dynamics, and local conditions.
+
+  use_cases:
+    when_to_use:
+      - Planning vacations or holidays
+      - Organizing business trips or corporate retreats
+      - Creating detailed travel itineraries
+      - Researching destinations and local attractions
+      - Budget planning for trips
+      - Group travel coordination
+      - Seasonal trip planning
+      - Special occasion travel (honeymoons, anniversaries)
+
+    when_not_to_use:
+      - Real-time flight booking or ticket purchasing
+      - Live transportation tracking
+      - Visa application processing
+      - Travel insurance purchase
+      - Currency exchange
+      - Emergency travel assistance
+      - Medical tourism planning
+      - Illegal or restricted travel activities
+
+  input_structure: |
+    Accepts travel planning queries with destination details:
+
+    {
+      "query": "Travel planning request",
+      "dates": "YYYY-MM-DD to YYYY-MM-DD",
+      "group_size": 4,
+      "budget": "$5000",
+      "travel_style": "luxury|budget|adventure|cultural|family",
+      "special_requirements": ["vegetarian", "accessibility", "etc"]
+    }
+
+    Constraints:
+    - Max query length: 500 characters
+    - Timeout: 180 seconds
+    - Language: English primary
+    - Scope: Travel planning and research
+
+  output_format: |
+    Comprehensive Travel Planning Output:
+    {
+      "success": true,
+      "travel_plan": {
+        "overview": {
+          "destination": "Destination Name",
+          "dates": "Start to End Date",
+          "duration_days": 5,
+          "group_size": 4,
+          "budget_range": "$4000-$5000",
+          "travel_style": "Family Cultural"
+        },
+        "accommodations": [
+          {
+            "name": "Accommodation Name",
+            "type": "Airbnb/Hotel/Villa",
+            "location": "Neighborhood/Area",
+            "features": ["Feature 1", "Feature 2"],
+            "estimated_cost_per_night": 150,
+            "booking_source": "Airbnb/Booking.com/Hotel Website"
+          }
+        ],
+        "daily_itinerary": [
+          {
+            "day": 1,
+            "theme": "Arrival & Orientation",
+            "activities": [
+              {
+                "time": "14:00",
+                "activity": "Check-in and settle",
+                "location": "Accommodation",
+                "duration_minutes": 60,
+                "estimated_cost": 0
+              }
+            ]
+          }
+        ],
+        "budget_breakdown": {
+          "accommodation": 750,
+          "transportation": 1200,
+          "activities": 800,
+          "food_dining": 600,
+          "local_transportation": 200,
+          "miscellaneous": 400,
+          "total_estimated": 3950
+        }
+      },
+      "local_insights": {
+        "cultural_etiquette": "Local customs and norms...",
+        "dining_recommendations": "Restaurant tips and cuisine...",
+        "safety_considerations": "Safety advice and precautions..."
+      },
+      "booking_requirements": [
+        "Book flights within 2 weeks of travel date",
+        "Reserve accommodations 1-2 months in advance",
+        "Purchase attraction tickets 1 month ahead for popular sites"
+      ],
+      "metadata": {
+        "query": "original_query",
+        "processing_time_ms": 8500,
+        "data_sources": ["Exa search"],
+        "response_type": "comprehensive_travel_plan"
+      }
+    }
+
+  error_handling:
+    - "Limited destination information: Focus on available data and suggest alternatives"
+    - "Seasonal constraints: Suggest alternative dates or indoor activities"
+    - "Budget constraints: Provide scaled options or cost-saving strategies"
+    - "Vague requests: Ask clarifying questions or provide sample itineraries"
+    - "Exa API limitations: Prioritize key information and suggest follow-up research"
+    - "MCP tool failures: Fall back to general planning without specific integrations"
+
+  examples:
+    - title: "Family Cultural Trip to Japan"
+      input:
+        query: "Plan a 5-day cultural exploration trip to Kyoto for a family of 4"
+        budget: "$4000"
+      output:
+        success: true
+        travel_plan:
+          overview:
+            destination: "Kyoto, Japan"
+            duration_days: 5
+            group_size: 4
+            budget_range: "$3500-$4000"
+            travel_style: "Family Cultural"
+          accommodations:
+            - name: "Traditional Machiya House"
+              type: "Vacation Rental"
+              location: "Gion District"
+              estimated_cost_per_night: 180
+          daily_itinerary: [...]
+        metadata:
+          processing_time_ms: 9200
+          data_sources: ["Exa search"]
+
+    - title: "Romantic Paris Weekend"
+      input:
+        query: "Create a romantic weekend getaway in Paris with a $2000 budget"
+      output:
+        success: true
+        travel_plan:
+          overview:
+            destination: "Paris, France"
+            duration_days: 3
+            group_size: 2
+            budget_range: "$1800-$2000"
+            travel_style: "Romantic Luxury"
+          accommodations:
+            - name: "Boutique Hotel in Le Marais"
+              type: "Hotel"
+              location: "Le Marais"
+              estimated_cost_per_night: 350
+          daily_itinerary: [...]
+        metadata:
+          processing_time_ms: 7800
+          data_sources: ["Exa search"]
+
+  best_practices:
+    for_developers:
+      - "Always verify destination information through Exa search"
+      - "Implement rate limiting for Exa API calls"
+      - "Cache frequent destination queries to improve performance"
+      - "Provide fallback options when MCP tools are unavailable"
+      - "Include seasonal considerations in all recommendations"
+      - "Validate time estimates and logistical feasibility"
+
+    for_orchestrators:
+      - "Route travel planning queries to this agent"
+      - "Consider longer timeouts for complex multi-destination trips"
+      - "Monitor Exa API usage and implement appropriate rate limiting"
+      - "Chain with budget analysis agents for cost optimization"
+      - "Use for pre-travel research and planning phases"
+
+  installation: |
+    Required packages:
+    pip install agno openai exa-py python-dotenv
+
+    Optional packages:
+    pip install mem0ai  # For memory features
+    pip install fastmcp  # For MCP tools
+
+    Environment variables:
+    OPENAI_API_KEY=your_openai_api_key          # OR
+    OPENROUTER_API_KEY=your_openrouter_api_key  # Alternative to OpenAI
+    EXA_API_KEY=your_exa_api_key                # Required for destination research
+    MEM0_API_KEY=your_mem0_api_key              # Optional for conversation memory
+
+  versioning:
+    - version: "1.0.0"
+      date: "2026-01-11"
+      changes: "Initial release with Exa destination research, comprehensive itinerary creation, and optional MCP/memory support"
+
+# Assessment fields for skill negotiation
+assessment:
+  keywords:
+    - travel
+    - trip
+    - vacation
+    - holiday
+    - itinerary
+    - plan
+    - destination
+    - hotel
+    - airbnb
+    - accommodation
+    - flight
+    - transportation
+    - budget
+    - cost
+    - luxury
+    - family
+    - couple
+    - solo
+    - group
+    - corporate
+    - adventure
+    - cultural
+    - romantic
+
+  specializations:
+    - domain: travel_planning
+      confidence_boost: 0.3
+    - domain: destination_research
+      confidence_boost: 0.3
+    - domain: itinerary_creation
+      confidence_boost: 0.2
+    - domain: budget_optimization
+      confidence_boost: 0.2
+
+  anti_patterns:
+    - "book flight now"
+    - "buy ticket"
+    - "visa application"
+    - "travel insurance"
+    - "emergency assistance"
+    - "real-time tracking"
+    - "illegal activities"
+    - "dangerous destinations"
+
+  complexity_indicators:
+    simple:
+      - "weekend trip to city"
+      - "hotels in location"
+      - "things to do in city"
+    medium:
+      - "multi-day trip to country"
+      - "group vacation planning"
+      - "detailed itinerary request"
+    complex:
+      - "multi-city international tour"
+      - "corporate retreat planning"
+      - "complex logistical coordination"
+      - "accessibility-focused travel"
