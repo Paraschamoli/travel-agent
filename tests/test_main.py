@@ -1,7 +1,8 @@
-import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from travel_agent.main import handler, initialize_agent, APIKeyError
+import pytest
+
+from travel_agent.main import APIKeyError, handler
 
 
 @pytest.mark.asyncio

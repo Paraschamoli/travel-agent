@@ -125,9 +125,7 @@ def _create_llm_model(openrouter_api_key: str, model_name: str) -> OpenRouter:
     )
 
 
-def _setup_tools(
-    mem0_api_key: str | None, exa_api_key: str
-) -> tuple[list, MultiMCPTools | None]:
+def _setup_tools(mem0_api_key: str | None, exa_api_key: str) -> tuple[list, MultiMCPTools | None]:
     """Set up all tools for the travel agent."""
     tools = []
     mcp_tools = None
@@ -404,7 +402,7 @@ async def initialize_agent() -> None:
         markdown=True,
     )
     print(f"✅ Travel Planning agent initialized using {model_name}")
-    print(f"🌍 Exa research enabled for destination insights")
+    print("🌍 Exa research enabled for destination insights")
     if mem0_api_key:
         print("🧠 Memory system enabled for conversation context")
     if mcp_tools:
